@@ -4,8 +4,9 @@ using System.Text;
 
 namespace data_guard.Interfaces;
 
-public interface ILogger
+interface IEmailsReader
 {
-    public void WriteLog(string message);
+    public List<string> Read();
+
 }
 
