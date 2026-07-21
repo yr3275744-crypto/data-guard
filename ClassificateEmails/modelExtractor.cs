@@ -14,7 +14,7 @@ class ModelExtractor
     public string[]? Keys { get; private set; }
     public List<string> Labels { get; private set; }
     public Dictionary<string, double> Priors { get; private set; }
-    public Dictionary<(string, string, double), double> Cond { get; private set; }
+    public Dictionary<(string, string, string), double> Cond { get; private set; }
     public Dictionary<(string, string), double> Unseen { get; private set; }
 
     public ModelExtractor()
