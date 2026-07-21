@@ -16,12 +16,12 @@ class EmailClassificator
 			foreach (var (feature, value) in email)
 			{
 				double prob;
-				var condKey = new ModelKey(label, feature, value);
+                var condKey = (label, feature, value);
 
-				if (model.Cond.TryGetValue(condKey, out double condProb))
-				{
-					prob = condProb;
-				}
+                if (model.Cond.TryGetValue(condKey, out double condProb))
+                {
+                    prob = condProb;
+                }
 				else
 				{
 					prob = model.Unseen[(label, feature)];
@@ -38,4 +38,3 @@ class EmailClassificator
 		return bestLabel;
 	}
 }
-	

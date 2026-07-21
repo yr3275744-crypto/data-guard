@@ -29,11 +29,11 @@ abstract class ClassificationManager
         EmailClassificator = classificator;
         ModelExtractor = modelExtractor;
         RawDataName = rawDataName;
-        Rows = new ();
+        Rows = new();
     }
- 
+
     public abstract void Execut();
 
-    
+
 }
 

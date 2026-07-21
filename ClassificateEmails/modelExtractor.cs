@@ -1,13 +1,14 @@
 ﻿// TODO: add validations on the raw table (lest 2 colmens..), 
 
 using data_guard.Exceptions;
+using data_guard.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace data_guard.ClassificateEmails;
 
-class ModelExtractor
+class ModelExtractor:IModelExtractor
 {
     public List<Dictionary<string, string>> RawTable { get; private set; }
     public string[]? Features { get; private set; }
