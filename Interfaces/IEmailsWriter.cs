@@ -4,8 +4,7 @@ using System.Text;
 
 namespace data_guard.Interfaces;
 
-public interface ILogger
+interface IEmailsWriter
 {
-    public void WriteLog(string message);
+    public void Write();
 }
-
