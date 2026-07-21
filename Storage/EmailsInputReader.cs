@@ -7,7 +7,7 @@ using data_guard.Exceptions;
 
 namespace data_guard.Storage;
 
-class EmailsInputFileReader : IEmailsInputReader
+class EmailsInputReader : IEmailsInputReader
 {
 	public List<Dictionary<string, string>> Read(string sorce, string[] featureArr)
 	{

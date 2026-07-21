@@ -20,7 +20,7 @@ abstract class ClassificationManager
 
     public List<Dictionary<string, string>> Rows { get; set; }
 
-    public Model? Model { get; }
+    public Model? Model { get; protected set; }
 
     protected ClassificationManager(IEmailsTraningReader emailsReader, ILogger logger, EmailClassificator classificator, IModelExtractor modelExtractor, string rawDataName)
     {
