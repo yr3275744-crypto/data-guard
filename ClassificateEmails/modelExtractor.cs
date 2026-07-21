@@ -11,17 +11,16 @@ class ModelExtractor
 {
     public List<Dictionary<string, string>> RawTable { get; private set; }
 
-    public string[] Keys { get; private set; }
+    public string[]? Keys { get; private set; }
     public List<string> Labels { get; private set; }
     public Dictionary<string, double> Priors { get; private set; }
-    public Dictionary<(string, string, double), int> Cond { get; private set; }
+    public Dictionary<(string, string, double), double> Cond { get; private set; }
     public Dictionary<(string, string), double> Unseen { get; private set; }
 
-    public ModelExtractor(List<Dictionary<string, string>> rawTable, string[] keys)
+    public ModelExtractor()
     {
-        RawTable = rawTable;
-        Keys = keys;
-        Labels = GetLabels();
+        RawTable = new();
+        Labels = new();
         Priors = new();
         Cond = new();
         Unseen = new();
@@ -56,6 +55,10 @@ class ModelExtractor
         {
             priors[label] = RawTable.Count(row => row[Keys[Keys.Length - 1]] == label) / (double)RawTable.Count();
         }
-        return priors;
+        return priors; f
+    }
+    private Dictionary<(string, string, double), double> GetCond()
+    {
+
     }
 }
