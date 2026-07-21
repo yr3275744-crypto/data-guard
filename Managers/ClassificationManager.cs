@@ -9,7 +9,7 @@ namespace data_guard.Managers;
 
 abstract class ClassificationManager
 {
-    public IEmailsReader EmailsReader { get; }
+    public IEmailsTraningReader EmailsTraningReader { get; }
     public ILogger Logger { get; }
 
     public EmailClassificator EmailClassificator { get; }
@@ -22,9 +22,9 @@ abstract class ClassificationManager
 
     public Model? Model { get; }
 
-    protected ClassificationManager(IEmailsReader emailsReader, ILogger logger, EmailClassificator classificator, IModelExtractor modelExtractor, string rawDataName)
+    protected ClassificationManager(IEmailsTraningReader emailsReader, ILogger logger, EmailClassificator classificator, IModelExtractor modelExtractor, string rawDataName)
     {
-        EmailsReader = emailsReader;
+        EmailsTraningReader = emailsReader;
         Logger = logger;
         EmailClassificator = classificator;
         ModelExtractor = modelExtractor;
