@@ -6,6 +6,6 @@ namespace data_guard.Exceptions;
 
 class FileIsEmptyException : Exception
 {
-    FileIsEmptyException(string mesege) : base(mesege) { }
+    public FileIsEmptyException(string mesege) : base(mesege) { }
 }
 
