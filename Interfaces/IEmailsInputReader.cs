@@ -4,7 +4,7 @@ using System.Text;
 
 namespace data_guard.Interfaces;
 
-interface IEmailInputFileReader
+interface IEmailsInputReader
 {
 	public List<Dictionary<string, string>> Read(string sorce, string[] featureArr);
 

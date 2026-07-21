@@ -8,9 +8,9 @@ namespace data_guard.Managers;
 
 class InteractiveClassificationManager : ClassificationManager
 {
-    public InteractiveClassificationManager(ILogger logger, IEmailsReader emailsReader, EmailClassificator classificator,
+    public InteractiveClassificationManager(ILogger logger, IEmailsTraningReader EmailsTraningReader, EmailClassificator classificator,
         IModelExtractor modelExtractor, string rawDataName) :
-        base(emailsReader, logger, classificator, modelExtractor, rawDataName)
+        base(EmailsTraningReader, logger, classificator, modelExtractor, rawDataName)
     { }
 
     public override void Execut()
