@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace data_guard.Exceptions
+namespace data_guard.Exceptions;
+
+class FileIsEmptyException : Exception
 {
-    internal class Exceptions
-    {
-    }
+    FileIsEmptyException(string mesege) : base(mesege) { }
 }
+
