@@ -6,7 +6,7 @@ namespace data_guard.Interfaces;
 
 interface IEmailsReader
 {
-    public List<string> Read();
+    public List<string> Read(string sorce);
 
 }
 
