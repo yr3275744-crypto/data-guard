@@ -18,7 +18,7 @@ abstract class ClassificationManager
 
     public string RawDataName { get; }
 
-    public List<string>? Rows { get; set; }
+    public List<string> Rows { get; set; }
 
     public Model Model { get; }
 
@@ -30,13 +30,11 @@ abstract class ClassificationManager
         ModelExtractor = modelExtractor;
         RawDataName = rawDataName;
         Rows = new List<string>();
+        Model = ModelExtractor.GetModel();
     }
  
     public abstract void Execut();
 
-    public void Extract()
-    {
-
-    }
+    
 }
 
