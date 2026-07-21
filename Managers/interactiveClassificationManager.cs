@@ -12,6 +12,10 @@ public void execute() { }
 
 	private string getEmailString()
 	{
-		
+		for (int i = 0; i < Model.RowTable.count(); i++)
+		{
+            Console.WriteLine("enter ");
+		}
+
 	}
 }
