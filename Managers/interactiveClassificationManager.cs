@@ -6,7 +6,7 @@ namespace data_guard.Managers;
 
 class InteractiveClassificationManager : ClassificationManager
 {
-	public InteractiveClassificationManager(ILogger logger, IEmailsReader emailsReader, EmailClassificator classificator, IModelExtractor modelExtractor, string rawDataName) : base(logger, emailsReader, classificator, modelExtractor, rawDataName)
+	public InteractiveClassificationManager(ILogger logger, IEmailsReader emailsReader, EmailClassificator classificator, IModelExtractor modelExtractor, string rawDataName) : base(logger, emailsReader, classificator, modelExtractor, rawDataName) { }
 
 public void execute() { }
 
