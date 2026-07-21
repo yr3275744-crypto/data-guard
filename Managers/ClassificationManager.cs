@@ -20,7 +20,7 @@ abstract class ClassificationManager
 
     public List<string>? Rows { get; set; }
 
-    public modelExtractor Model { get; }
+    public Model Model { get; }
 
     protected ClassificationManager(IEmailsReader emailsReader, ILogger logger, EmailClassificator classificator, IModelExtractor modelExtractor, string rawDataName)
     {
@@ -33,5 +33,10 @@ abstract class ClassificationManager
     }
  
     public abstract void Execut();
+
+    public void Extract()
+    {
+
+    }
 }
 
