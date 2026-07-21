@@ -18,9 +18,9 @@ abstract class ClassificationManager
 
     public string RawDataName { get; }
 
-    public List<string> Rows { get; set; }
+    public List<Dictionary<string, string>> Rows { get; set; }
 
-    public Model Model { get; }
+    public Model? Model { get; }
 
     protected ClassificationManager(IEmailsReader emailsReader, ILogger logger, EmailClassificator classificator, IModelExtractor modelExtractor, string rawDataName)
     {
@@ -29,8 +29,7 @@ abstract class ClassificationManager
         EmailClassificator = classificator;
         ModelExtractor = modelExtractor;
         RawDataName = rawDataName;
-        Rows = new List<string>();
-        Model = ModelExtractor.GetModel();
+        Rows = new ();
     }
  
     public abstract void Execut();

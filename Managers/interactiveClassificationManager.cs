@@ -8,43 +8,44 @@ namespace data_guard.Managers;
 
 class InteractiveClassificationManager : ClassificationManager
 {
-	public InteractiveClassificationManager(ILogger logger, IEmailsReader emailsReader, EmailClassificator classificator,
-		IModelExtractor modelExtractor, string rawDataName) :
-		base(logger, emailsReader, classificator, modelExtractor, rawDataName) { }
+    public InteractiveClassificationManager(ILogger logger, IEmailsReader emailsReader, EmailClassificator classificator,
+        IModelExtractor modelExtractor, string rawDataName) :
+        base(emailsReader, logger, classificator, modelExtractor, rawDataName)
+    { }
 
-	public override void Execut() 
-	{
-		bool runFlag = true;
+    public override void Execut()
+    {
+        bool runFlag = true;
 
-		while (runFlag)
-		{
-			string? email = getEmailString();
+        while (runFlag)
+        {
+            string? email = getEmailString();
 
-			if (email == null) 
-			{
-				runFlag = false;
-			}
-            else 
-			{
-				Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
-			}
+            if (email == null)
+            {
+                runFlag = false;
+            }
+            else
+            {
+                Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
+            }
 
         }
-	}
+    }
 
-	private string? getEmailString()
-	{
-		List<string?> emailStringList = new List<string?>();
-
-        for (int i = 0; i < Model.RawTable.Count -1; i++)
-		{
-			Console.WriteLine($"enter next value: ");
-			string? userInput = Console.ReadLine();
-			if (userInput == null) { return null; }
+    private string? getEmailString()
+    {
+        List<string?> emailStringList = new List<string?>();
+        List<string> featuers = Rows[0].Keys.ToList();
+        foreach (string feature in featuers)
+        {
+            Console.WriteLine($"{feature}: ");
+            string? userInput = Console.ReadLine();
+            if (userInput == null) { return null; }
 
             emailStringList.Add(userInput);
         }
 
-		return string.Join(',', emailStringList);
-	}
+        return string.Join(',', emailStringList);
+    }
 }

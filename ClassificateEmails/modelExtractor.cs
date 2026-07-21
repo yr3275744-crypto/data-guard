@@ -53,7 +53,6 @@ class ModelExtractor
     }
     private void DefineLabels()
     {
-        //int rowsNumber = RawTable.Count;
         Labels = RawTable.GroupBy(row => row[TargetColumnKey])
             .Select(grop => grop.Key)
             .ToList();
