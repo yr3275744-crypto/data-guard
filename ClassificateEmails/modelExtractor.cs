@@ -76,19 +76,13 @@ class ModelExtractor
                     .GroupBy(row => row[feature])
                     .Select(g => g.Key)
                     .ToList();
+                Unseen[(label, feature)] = 1 / ((double)RawTable.Count(row => row[TargetColumnKey] == label) + values.Count);
                 foreach (string value in values)
                 {
                     int count = RawTable
                         .Where(row => row[TargetColumnKey] == label)
                         .Count(row => row[feature] == value);
-                    if (count != 0)
-                    {
                         Cond[(label, feature, value)] = count / (double)RawTable.Count(row => row[TargetColumnKey] == label);
-                    }
-                    else
-                    {
-                        Unseen[(label, feature)] = 1 / ((double)RawTable.Count(row => row[TargetColumnKey] == label) + values.Count);
-                    }
                 }
             }
         }
