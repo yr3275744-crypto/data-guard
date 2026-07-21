@@ -37,27 +37,24 @@ class ModelExtractor
         }
         RawTable = rawTable;
         Keys = keys;
-        Labels = GetLabels();
-        Priors = GetPriors();
+        //Labels = GetLabels();
+        //Priors = GetPriors();
     }
-    public List<string> GetLabels()
+    private void DefineLabels()
     {
         //int rowsNumber = RawTable.Count;
-        List<string> labels = RawTable.GroupBy(row => row[Keys[Keys.Length - 1]])
+        Labels = RawTable.GroupBy(row => row[Keys[Keys.Length - 1]])
             .Select(grop => grop.Key)
             .ToList();
-        return labels;
     }
-    private Dictionary<string, double> GetPriors()
+    private void definePriors()
     {
-        Dictionary<string, double> priors = new();
         foreach (string label in Labels)
         {
-            priors[label] = RawTable.Count(row => row[Keys[Keys.Length - 1]] == label) / (double)RawTable.Count();
+            Priors[label] = RawTable.Count(row => row[Keys[Keys.Length - 1]] == label) / (double)RawTable.Count();
         }
-        return priors; f
     }
-    private Dictionary<(string, string, double), double> GetCond()
+    private void DefineCond()
     {
 
     }
