@@ -6,15 +6,18 @@ namespace data_guard.ClassificateEmails;
 
 class Model
 {
-    // ליצור את השדות האלו:
-    //(string[], Dictionary<string, int>, Dictionary<(string, string), int>, Dictionary<(string, string, int), int>)
-    public List<Dictionary<string, string>> RawTable { get; private set; }
-    public string[] Labels { get; private set; }
-    public Dictionary<string, int> Priors { get; private set; }
-    public Dictionary<(string, string, int), int> Cond { get; private set; }
-    public Dictionary<(string, string), int> Unseen { get; private set; }
-    public Model(List<Dictionary<string, string>> rawTable)
+    public List<string> Labels { get; private set; }
+    public Dictionary<string, double> Priors { get; private set; }
+    public Dictionary<(string, string, string), double> Cond { get; private set; }
+    public Dictionary<(string, string), double> Unseen { get; private set; }
+    public Model(List<string> labels,
+        Dictionary<string, double> priors,
+        Dictionary<(string, string, string), double> cond,
+        Dictionary<(string, string), double> unseen)
     {
-        RawTable = rawTable;
+        Labels = labels;
+        Priors = priors;
+        Cond = cond;
+        Unseen = unseen;
     }
 }
