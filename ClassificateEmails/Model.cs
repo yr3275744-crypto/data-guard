@@ -10,9 +10,9 @@ class Model
     //(string[], Dictionary<string, int>, Dictionary<(string, string), int>, Dictionary<(string, string, int), int>)
     private List<Dictionary<string, string>> _rawTable;
     public string[] Labels { get; private set; }
-    public Dictionary<string, int> Priors { get; private set; }
-    public Dictionary<(string, string, int), int> Cond { get; private set; }
-    public Dictionary<(string, string), int> Unseen { get; private set; }
+    public Dictionary<string, double> Priors { get; private set; }
+    public Dictionary<(string, string, double), int> Cond { get; private set; }
+    public Dictionary<(string, string), double> Unseen { get; private set; }
     public Model(List<Dictionary<string, string>> rawTable)
     {
         _rawTable = rawTable;

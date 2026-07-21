@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace data_guard.Exceptions
+namespace data_guard.Exceptions;
+
+class UnClassificationTable : Exception
 {
-    internal class Exceptions
-    {
-    }
+    public UnClassificationTable(string message) : base(message) { }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// TODO: add validations on the raw table (lest 2 colmens..), 
+
+using data_guard.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,23 +12,50 @@ class ModelExtractor
     public List<Dictionary<string, string>> RawTable { get; private set; }
 
     public string[] Keys { get; private set; }
-    public string[]? Labels { get; private set; }
-    public Dictionary<string, int>? Priors { get; private set; }
-    public Dictionary<(string, string, int), int>? Cond { get; private set; }
-    public Dictionary<(string, string), int>? Unseen { get; private set; }
+    public List<string> Labels { get; private set; }
+    public Dictionary<string, double> Priors { get; private set; }
+    public Dictionary<(string, string, double), int> Cond { get; private set; }
+    public Dictionary<(string, string), double> Unseen { get; private set; }
 
     public ModelExtractor(List<Dictionary<string, string>> rawTable, string[] keys)
     {
         RawTable = rawTable;
         Keys = keys;
         Labels = GetLabels();
+        Priors = new();
+        Cond = new();
+        Unseen = new();
     }
-    private string[] GetLabels()
+    public Model GetModel(List<Dictionary<string, string>> rawTable, string[] keys)
+    {
+        if (keys.Length == 0)
+        {
+            throw new UnClassificationTable("Not enough columns");
+        }
+        if (rawTable.Count == 0)
+        {
+            throw new UnClassificationTable("Not enough rows");
+        }
+        RawTable = rawTable;
+        Keys = keys;
+        Labels = GetLabels();
+        Priors = GetPriors();
+    }
+    public List<string> GetLabels()
     {
         //int rowsNumber = RawTable.Count;
-        string[] labels = RawTable.GroupBy(row => row[Keys[Keys.Length - 1]])
+        List<string> labels = RawTable.GroupBy(row => row[Keys[Keys.Length - 1]])
             .Select(grop => grop.Key)
-            .ToArray();
+            .ToList();
         return labels;
+    }
+    private Dictionary<string, double> GetPriors()
+    {
+        Dictionary<string, double> priors = new();
+        foreach (string label in Labels)
+        {
+            priors[label] = RawTable.Count(row => row[Keys[Keys.Length - 1]] == label) / (double)RawTable.Count();
+        }
+        return priors;
     }
 }
