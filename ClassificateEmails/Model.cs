@@ -8,13 +8,18 @@ class Model
 {
     // ליצור את השדות האלו:
     //(string[], Dictionary<string, int>, Dictionary<(string, string), int>, Dictionary<(string, string, int), int>)
-    private List<Dictionary<string, string>> _rawTable;
-    public string[] Labels { get; private set; }
+    public List<string> Labels { get; private set; }
     public Dictionary<string, double> Priors { get; private set; }
     public Dictionary<(string, string, double), int> Cond { get; private set; }
     public Dictionary<(string, string), double> Unseen { get; private set; }
-    public Model(List<Dictionary<string, string>> rawTable)
+    public Model(List<string> labels,
+        Dictionary<string, double> priors,
+        Dictionary<(string, string, double), int> cond,
+        Dictionary<(string, string), double> unseen)
     {
-        _rawTable = rawTable;
+        Labels = labels;
+        Priors = priors;
+        Cond = cond;
+        Unseen = unseen;
     }
 }
