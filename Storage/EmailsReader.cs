@@ -7,9 +7,9 @@ using data_guard.Exceptions;
 
 namespace data_guard.Storage;
 
-class EmailsReader: IEmailsReader
+class EmailsTraningReader: IEmailsTraningReader
 {
-    public List<string> Read(string sorce)
+    public List<Dictionary<string, string>> Read(string sorce)
     {
         string path = PathCreator.GetPath(sorce);
 
@@ -23,7 +23,30 @@ class EmailsReader: IEmailsReader
         {
             throw new UnClassificationTable("not valid for algorithem");
         }
-    return lines;
+        List<Dictionary<string, string>> dataDictList = new List<Dictionary<string, string>>();
+
+        List<string> featureList = lines[0].Split(",").ToList();
+        lines.RemoveAt(0);
+
+        foreach (string line in lines)
+        {
+
+            Dictionary<string, string> dataDict = new Dictionary<string, string>();
+
+            string[] lineArr = line.Split(",");
+
+            if (lineArr.Length != featureList.Count)
+            {
+                throw new UnClassificationTable("data is not secure, mising or is overFlowed");
+            }
+            for (int i = 0; i < featureList.Count; i++)
+            {
+                dataDict.Add(featureList[i], lineArr[i]);
+            }
+            dataDictList.Add(dataDict);
+
+        }
+        return dataDictList;
     }
 }
 

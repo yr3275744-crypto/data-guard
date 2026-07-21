@@ -4,9 +4,9 @@ using System.Text;
 
 namespace data_guard.Interfaces;
 
-interface IEmailsReader
+interface IEmailsTraningReader
 {
-    public List<string> Read(string sorce);
+    public List<Dictionary<string, string>> Read(string sorce);
 
 }
 
