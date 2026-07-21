@@ -6,5 +6,5 @@ namespace data_guard.Interfaces;
 
 interface IEmailsWriter
 {
-    public void Write();
+    public void Write(string target);
 }
