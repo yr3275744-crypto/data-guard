@@ -6,7 +6,7 @@ namespace data_guard.Storage;
 
 class PathCreator
 {
-    public string GetPath(string path)
+    public static string GetPath(string path)
     {
         string currentPath = Directory.GetCurrentDirectory();
         return Path.Combine(currentPath, path);
