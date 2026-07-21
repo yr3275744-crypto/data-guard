@@ -6,6 +6,6 @@ namespace data_guard.Interfaces;
 
 interface IModelExtractor
 {
-    public Model CreateModel(List<string> rows);
+    public abstract Model GetModel(List<Dictionary<string, string>> rawTable);
 }
 
