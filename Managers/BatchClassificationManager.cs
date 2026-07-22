@@ -51,7 +51,7 @@ class BatchClassificationManager : ClassificationManager
             Logger.WriteLog($"row {i}: {stringLine} -> {bestLabel}");
             stringLine += bestLabel;
             resultLines.Add(stringLine);
-            EmailsWriter.Write(EmailOutputName);
         }
+        EmailsWriter.Write(EmailOutputName, resultLines);
     }
 }

@@ -22,6 +22,7 @@ class InteractiveClassificationManager : ClassificationManager
 
             while (runFlag)
             {
+<<<<<<< HEAD
                 Dictionary<string, string>? email = getEmail();
 
                 if (email == null)
@@ -33,6 +34,13 @@ class InteractiveClassificationManager : ClassificationManager
                     Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
                 }
 
+=======
+                runFlag = false;
+            }
+            else
+            {
+                Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
+>>>>>>> dev
             }
         }
         catch ( UnClassificationTable ex) { Console.WriteLine(ex.Message); }

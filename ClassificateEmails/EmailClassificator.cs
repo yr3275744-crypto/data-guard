@@ -12,7 +12,7 @@ class EmailClassificator
 		double bestScore = double.NegativeInfinity;
 		foreach (var label in model.Labels)
 		{
-			double score = Math.Log(model.Priors[label]);
+			double score = model.Priors[label];
 			foreach (var (feature, value) in email)
 			{
 				double prob;
@@ -26,7 +26,7 @@ class EmailClassificator
 				{
 					prob = model.Unseen[(label, feature)];
 				}
-				score += Math.Log(prob);
+				score *= prob;
 			}
 
 			if (score > bestScore)
