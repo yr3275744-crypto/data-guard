@@ -8,7 +8,7 @@ using System.Text;
 
 namespace data_guard.ClassificateEmails;
 
-class ModelExtractor:IModelExtractor
+class ModelExtractor : IModelExtractor
 {
     public List<Dictionary<string, string>> RawTable { get; private set; }
     public string[]? Features { get; private set; }
@@ -76,13 +76,20 @@ class ModelExtractor:IModelExtractor
                     .GroupBy(row => row[feature])
                     .Select(g => g.Key)
                     .ToList();
-                Unseen[(label, feature)] = 1 / ((double)RawTable.Count(row => row[TargetColumnKey] == label) + values.Count);
+                Unseen[(label, feature)] =
+                    1 /
+                    ((double)RawTable.Count(row => row[TargetColumnKey] == label) +
+                    RawTable
+                    .GroupBy(row => row[feature])
+                    .Select(g => g.Key)
+                    .ToList()
+                    .Count());
                 foreach (string value in values)
                 {
                     int count = RawTable
                         .Where(row => row[TargetColumnKey] == label)
                         .Count(row => row[feature] == value);
-                        Cond[(label, feature, value)] = count / (double)RawTable.Count(row => row[TargetColumnKey] == label);
+                    Cond[(label, feature, value)] = count / (double)RawTable.Count(row => row[TargetColumnKey] == label);
                 }
             }
         }
