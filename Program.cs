@@ -21,13 +21,15 @@ namespace data_guard
             switch (args.Length)
             {
                 case 1:
-                    ClassificationManager maneger = new InteractiveClassificationManager(logger, emailTraningReader, classificator, modelExtractor, args[0]);
+                    ClassificationManager InteractivManeger = new InteractiveClassificationManager(logger, emailTraningReader, classificator, modelExtractor, args[0]);
 
                     break;
 
                 case 2:
-                    
-                    
+                    IEmailsInputReader bachInput = new EmailsInputReader();
+                    //IEmailsWriter uotputWriter = new()
+
+                    ClassificationManager bachManeger = new BatchClassificationManager(logger, emailTraningReader, , bachInput, classificator, modelExtractor, args[0], args[1]);
                     break;
 
                 default:
