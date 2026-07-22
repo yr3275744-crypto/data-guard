@@ -19,7 +19,7 @@ class InteractiveClassificationManager : ClassificationManager
 
         while (runFlag)
         {
-            string? email = getEmailString();
+            Dictionary<string, string>? email = getEmail();
 
             if (email == null)
             {
@@ -33,9 +33,9 @@ class InteractiveClassificationManager : ClassificationManager
         }
     }
 
-    private string? getEmailString()
+    private Dictionary<string, string>? getEmail()
     {
-        List<string?> emailStringList = new List<string?>();
+        Dictionary<string, string?> emailDict = new Dictionary<string, string?>();
         List<string> featuers = Rows[0].Keys.ToList();
         foreach (string feature in featuers)
         {
@@ -43,9 +43,11 @@ class InteractiveClassificationManager : ClassificationManager
             string? userInput = Console.ReadLine();
             if (userInput == null) { return null; }
 
-            emailStringList.Add(userInput);
+
+
+            emailDict.Add(feature, userInput);
         }
 
-        return string.Join(',', emailStringList);
+        return emailDict;
     }
 }
