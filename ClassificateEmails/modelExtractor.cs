@@ -72,24 +72,20 @@ class ModelExtractor : IModelExtractor
             foreach (string feature in Features[..(Features.Length - 1)])
             {
                 List<string> values = RawTable
-                    .Where(row => row[TargetColumnKey] == label)
                     .GroupBy(row => row[feature])
                     .Select(g => g.Key)
                     .ToList();
-                Unseen[(label, feature)] =
-                    1 /
-                    ((double)RawTable.Count(row => row[TargetColumnKey] == label) +
-                    RawTable
-                    .GroupBy(row => row[feature])
-                    .Select(g => g.Key)
-                    .ToList()
-                    .Count());
+                int labelCount = RawTable.Count(row => row[TargetColumnKey] == label);
+                Unseen[(label, feature)] = 1.0 / (labelCount + values.Count);
                 foreach (string value in values)
                 {
                     int count = RawTable
                         .Where(row => row[TargetColumnKey] == label)
                         .Count(row => row[feature] == value);
-                    Cond[(label, feature, value)] = count / (double)RawTable.Count(row => row[TargetColumnKey] == label);
+                    if (count != 0)
+                    {
+                        Cond[(label, feature, value)] = (double)(count + 1) / (labelCount + values.Count);
+                    }
                 }
             }
         }
