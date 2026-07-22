@@ -23,7 +23,7 @@ class BatchClassificationManager : ClassificationManager
         string emailOutputName) :
         base(EmailsTraningReader, logger, classificator, modelExtractor, rawDataName)
     {
-        EmailsInputName = emailOutputName;
+        EmailsInputName = emailsInputName;
         EmailsInputReader = emailsInputReader;
         EmailsWriter = emailsWriter;
         EmailOutputName = emailOutputName;
@@ -36,7 +36,7 @@ class BatchClassificationManager : ClassificationManager
     private List<Dictionary<string, string>> GetData()
     {
         string[] featuers = Rows[0].Keys.ToArray();
-        return EmailsInputReader.Read(EmailsInputName, featuers);
+        return EmailsInputReader.Read(EmailsInputName, featuers[..(featuers.Length - 1)]);
     }
     public override void Execut()
     {

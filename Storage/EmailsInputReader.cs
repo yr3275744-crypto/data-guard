@@ -9,40 +9,40 @@ namespace data_guard.Storage;
 
 class EmailsInputReader : IEmailsInputReader
 {
-	public List<Dictionary<string, string>> Read(string sorce, string[] featureArr)
-	{
-		string path = PathCreator.GetPath(sorce);
+    public List<Dictionary<string, string>> Read(string sorce, string[] featureArr)
+    {
+        string path = PathCreator.GetPath(sorce);
 
-		List<string> lines = File.ReadLines("file.txt").ToList();
+        List<string> lines = File.ReadLines(path).ToList();
 
-		if (lines.Count == 0)
-		{
-			throw new FileIsEmptyException("no data to run algoritem on!");
-		}
-		if (lines[0].Split(',').Length <= 1)
-		{
-			throw new UnClassificationTable("not valid for algorithem");
-		}
-		List<Dictionary<string, string>> dataDictList = new List<Dictionary<string, string>>();
+        if (lines.Count == 0)
+        {
+            throw new FileIsEmptyException("no data to run algoritem on!");
+        }
+        if (lines[0].Split(',').Length <= 1)
+        {
+            throw new UnClassificationTable("not valid for algorithem");
+        }
+        List<Dictionary<string, string>> dataDictList = new List<Dictionary<string, string>>();
 
-		foreach (string line in lines)
-		{
+        foreach (string line in lines)
+        {
 
-			Dictionary<string, string> dataDict = new Dictionary<string, string>();
+            Dictionary<string, string> dataDict = new Dictionary<string, string>();
 
-			string[] lineArr = line.Split(",");
+            string[] lineArr = line.Split(",");
 
-			if (lineArr.Length != featureArr.Length)
-			{
-				throw new UnClassificationTable("data is not secure, mising or is overFlowed");
-			}
-			for (int i = 0; i < featureArr.Length; i++)
-			{
-				dataDict.Add(featureArr[i], lineArr[i]);
-			}
-			dataDictList.Add(dataDict);
+            if (lineArr.Length != featureArr.Length)
+            {
+                throw new UnClassificationTable("data is not secure, mising or is overFlowed");
+            }
+            for (int i = 0; i < featureArr.Length; i++)
+            {
+                dataDict.Add(featureArr[i], lineArr[i]);
+            }
+            dataDictList.Add(dataDict);
 
-		}
-		return dataDictList;
-	}
+        }
+        return dataDictList;
+    }
 }
