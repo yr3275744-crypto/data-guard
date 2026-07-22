@@ -21,8 +21,8 @@ namespace data_guard
             switch (args.Length)
             {
                 case 1:
-                    ClassificationManager InteractivManeger = new InteractiveClassificationManager(logger, emailTraningReader, classificator, modelExtractor, args[0]);
-
+                    ClassificationManager interactivManeger = new InteractiveClassificationManager(logger, emailTraningReader, classificator, modelExtractor, args[0]);
+                    interactivManeger.Execut();
                     break;
 
                 case 2:
