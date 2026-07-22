@@ -7,15 +7,15 @@ using data_guard.Exceptions;
 
 namespace data_guard.Storage;
 
-class EmailsTraningReader: IEmailsTraningReader
+class EmailsTraningReader : IEmailsTraningReader
 {
     public List<Dictionary<string, string>> Read(string sorce)
     {
         string path = PathCreator.GetPath(sorce);
 
-        List<string> lines = File.ReadLines("file.txt").ToList();
+        List<string> lines = File.ReadLines(path).ToList();
 
-        if (lines.Count == 0 )
+        if (lines.Count == 0)
         {
             throw new FileIsEmptyException("no data to run algoritem on!");
         }

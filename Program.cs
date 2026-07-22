@@ -8,7 +8,7 @@ namespace data_guard
 {
     class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             // Initialize dependencies
             ILogger logger = new ConsoleLogger();
@@ -16,7 +16,7 @@ namespace data_guard
             IModelExtractor modelExtractor = new ModelExtractor();
             IEmailsTraningReader emailTraningReader = new EmailsTraningReader();
             EmailClassificator classificator = new EmailClassificator();
-
+            string[] args = ["Job_Promotion_Train.csv", "Job_Promotion_Test.csv"];
 
             switch (args.Length)
             {
@@ -31,6 +31,7 @@ namespace data_guard
                     string uotputPath = "predictions.csv";
 
                     ClassificationManager bachManeger = new BatchClassificationManager(logger, emailTraningReader, uotputWriter, bachInput, classificator, modelExtractor, args[0], args[1], uotputPath);
+                    bachManeger.Execut();
                     break;
 
                 default:
