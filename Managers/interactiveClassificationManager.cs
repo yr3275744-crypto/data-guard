@@ -1,4 +1,5 @@
 using data_guard.ClassificateEmails;
+using data_guard.Exceptions;
 using data_guard.Interfaces;
 using data_guard.Storage;
 using System.Reflection.Metadata;
@@ -15,22 +16,30 @@ class InteractiveClassificationManager : ClassificationManager
 
     public override void Execut()
     {
-        bool runFlag = true;
-
-        while (runFlag)
+        try
         {
-            Dictionary<string, string>? email = getEmail();
+            bool runFlag = true;
 
-            if (email == null)
+            while (runFlag)
             {
-                runFlag = false;
-            }
-            else
-            {
-                Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
-            }
+                Dictionary<string, string>? email = getEmail();
 
+                if (email == null)
+                {
+                    runFlag = false;
+                }
+                else
+                {
+                    Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
+                }
+
+            }
         }
+        catch ( UnClassificationTable ex) { Console.WriteLine(ex.Message); }
+
+        catch (FileIsEmptyException ex) { Console.WriteLine(ex.Message); }
+
+        catch(Exception ex) { Console.WriteLine(ex.Message); }
     }
 
     private Dictionary<string, string>? getEmail()
