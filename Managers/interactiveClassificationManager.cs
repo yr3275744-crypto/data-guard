@@ -29,7 +29,6 @@ class InteractiveClassificationManager : ClassificationManager
             {
                 Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
             }
-
         }
     }
 
