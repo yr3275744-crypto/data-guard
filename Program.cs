@@ -26,7 +26,7 @@ namespace data_guard
                     break;
 
                 case 2:
-                    IEmailsInputReader bachInputReader = new EmailsInputReader();
+                    IEmailsInputReader bachInputReader = new EmailsInputReader(logger);
                     IEmailsWriter uotputWriter = new EmailsWriter();
                     string uotputPath = "predictions.csv";
                     ClassificationManager bachManeger = new BatchClassificationManager(logger, emailTraningReader, uotputWriter, bachInputReader, classificator, modelExtractor, args[0], args[1], uotputPath);

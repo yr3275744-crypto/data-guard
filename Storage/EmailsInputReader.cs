@@ -9,6 +9,11 @@ namespace data_guard.Storage;
 
 class EmailsInputReader : IEmailsInputReader
 {
+    ILogger Logger { get; set; }
+    public EmailsInputReader(ILogger logger)
+    {
+        Logger = logger;
+    }
     public List<Dictionary<string, string>> Read(string sorce, string[] featureArr)
     {
         string path = PathCreator.GetPath(sorce);
@@ -25,23 +30,25 @@ class EmailsInputReader : IEmailsInputReader
         }
         List<Dictionary<string, string>> dataDictList = new List<Dictionary<string, string>>();
 
-        foreach (string line in lines)
+        for (int i = 0; i < lines.Count; i++)
         {
 
             Dictionary<string, string> dataDict = new Dictionary<string, string>();
 
-            string[] lineArr = line.Split(",");
+            string[] lineArr = lines[i].Split(",");
 
             if (lineArr.Length != featureArr.Length)
             {
-                throw new UnClassificationTable("data is not secure, mising or is overFlowed");
+                Logger.WriteLog($"Line {i}: data is not secure, mising or is overFlowed");
             }
-            for (int i = 0; i < featureArr.Length; i++)
+            else
             {
-                dataDict.Add(featureArr[i], lineArr[i]);
+                for (int j = 0; j < featureArr.Length; j++)
+                {
+                    dataDict.Add(featureArr[j], lineArr[j]);
+                }
+                dataDictList.Add(dataDict);
             }
-            dataDictList.Add(dataDict);
-
         }
         return dataDictList;
     }

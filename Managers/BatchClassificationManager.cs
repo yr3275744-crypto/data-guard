@@ -1,4 +1,5 @@
 ﻿using data_guard.ClassificateEmails;
+using data_guard.Exceptions;
 using data_guard.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -40,18 +41,41 @@ class BatchClassificationManager : ClassificationManager
     }
     public override void Execut()
     {
-        DefineModel();
-        List<Dictionary<string, string>> unClassificateData = GetData();
-        List<string> resultLines = new();
-        for (int i = 0; i < unClassificateData.Count; i++)
+        try
         {
-            string bestLabel = EmailClassificator.GetClasification(Model, unClassificateData[i]);
-            List<string> allEmaileDetiles = unClassificateData[i].Values.ToList();
-            string stringLine = string.Join(",", allEmaileDetiles);
-            Logger.WriteLog($"row {i}: {stringLine} -> {bestLabel}");
-            stringLine += bestLabel;
-            resultLines.Add(stringLine);
+            DefineModel();
+            List<Dictionary<string, string>> unClassificateData = GetData();
+            List<string> resultLines = new();
+            for (int i = 0; i < unClassificateData.Count; i++)
+            {
+                string bestLabel = EmailClassificator.GetClasification(Model, unClassificateData[i]);
+                List<string> allEmaileDetiles = unClassificateData[i].Values.ToList();
+                string stringLine = string.Join(",", allEmaileDetiles);
+                Logger.WriteLog($"row {i}: {stringLine} -> {bestLabel}");
+                stringLine += $",{bestLabel}";
+                resultLines.Add(stringLine);
+            }
+            EmailsWriter.Write(EmailOutputName, resultLines);
         }
-        EmailsWriter.Write(EmailOutputName, resultLines);
+        catch (UnClassificationTable ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (FileNotFoundException ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (FileIsEmptyException ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (IOException ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
     }
 }

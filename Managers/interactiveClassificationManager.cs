@@ -1,4 +1,5 @@
 using data_guard.ClassificateEmails;
+using data_guard.Exceptions;
 using data_guard.Interfaces;
 using data_guard.Storage;
 using System.Reflection.Metadata;
@@ -19,22 +20,45 @@ class InteractiveClassificationManager : ClassificationManager
     }
     public override void Execut()
     {
-        DefineModel();
-        bool runFlag = true;
-
-        while (runFlag)
+        try
         {
-            Dictionary<string, string>? email = getEmail();
+            DefineModel();
+            bool runFlag = true;
 
-            if (email == null)
+            while (runFlag)
             {
-                runFlag = false;
+                Dictionary<string, string>? email = getEmail();
+
+                if (email == null)
+                {
+                    runFlag = false;
+                }
+                else
+                {
+                    string result = EmailClassificator.GetClasification(Model, email);
+                    Logger.WriteLog($"Prediction: {result}");
+                }
             }
-            else
-            {
-                string result = EmailClassificator.GetClasification(Model, email);
-                Logger.WriteLog($"Prediction: {result}");
-            }
+        }
+        catch (UnClassificationTable ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (FileNotFoundException ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (FileIsEmptyException ex)
+        {
+            Logger.WriteLog(ex.Message);
+        }
+        catch (IOException ex)
+        {
+            Logger.WriteLog(ex.Message);
         }
     }
 
@@ -43,15 +67,13 @@ class InteractiveClassificationManager : ClassificationManager
         Dictionary<string, string?> emailDict = new Dictionary<string, string?>();
         List<string> featuers = Rows[0].Keys.ToList();
 
-        foreach (string feature in featuers[..(featuers.Count - 1)])
+        for (int i = 0; i < featuers.Count - 1; i++)
         {
-            Console.WriteLine($"{feature}: ");
+            Console.WriteLine($"{featuers[i]}: ");
             string? userInput = Console.ReadLine();
-            if (string.IsNullOrEmpty(userInput)) { return null; }
+            if (string.IsNullOrEmpty(userInput) && (i == 0)) { return null; }
 
-
-
-            emailDict.Add(feature, userInput);
+            emailDict.Add(featuers[i], userInput);
         }
 
         return emailDict;
