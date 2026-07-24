@@ -12,9 +12,14 @@ class InteractiveClassificationManager : ClassificationManager
         IModelExtractor modelExtractor, string rawDataName) :
         base(emailsTraningReader, logger, classificator, modelExtractor, rawDataName)
     { }
-
+    private void DefineModel()
+    {
+        Rows = EmailsTraningReader.Read(RawDataName);
+        Model = ModelExtractor.GetModel(Rows);
+    }
     public override void Execut()
     {
+        DefineModel();
         bool runFlag = true;
 
         while (runFlag)
@@ -27,7 +32,8 @@ class InteractiveClassificationManager : ClassificationManager
             }
             else
             {
-                Logger.WriteLog(EmailClassificator.GetClasification(Model, email));
+                string result = EmailClassificator.GetClasification(Model, email);
+                Logger.WriteLog($"Prediction: {result}");
             }
         }
     }
@@ -36,11 +42,12 @@ class InteractiveClassificationManager : ClassificationManager
     {
         Dictionary<string, string?> emailDict = new Dictionary<string, string?>();
         List<string> featuers = Rows[0].Keys.ToList();
-        foreach (string feature in featuers)
+
+        foreach (string feature in featuers[..(featuers.Count - 1)])
         {
             Console.WriteLine($"{feature}: ");
             string? userInput = Console.ReadLine();
-            if (userInput == null) { return null; }
+            if (string.IsNullOrEmpty(userInput)) { return null; }
 
 
 
